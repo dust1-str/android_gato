@@ -1,15 +1,18 @@
 package com.example.juego_gato;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity{
 
-    Button b1, b2, b3, b4, b5, b6, b7, b8, b9, reset;
+    Button b1, b2, b3, b4, b5, b6, b7, b8, b9, reset, end;
     TextView winner, winsX, winsO;
     char turno = 'X';
     int i = 0, countX = 1, countO = 1;
@@ -33,6 +36,7 @@ public class MainActivity extends AppCompatActivity{
         winsX = findViewById(R.id.countX);
         winsO = findViewById(R.id.countO);
         reset = findViewById(R.id.reset);
+        end = findViewById(R.id.end);
 
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,11 +113,13 @@ public class MainActivity extends AppCompatActivity{
         reset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                for (int i = 0; i <= 8; i++){
-                    juego[i] = '-';
-                }
-                b1.setText('-');
-                turno = 'X';
+                reiniciarJuego();
+            }
+        });
+        end.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mostrarDialogo();
             }
         });
 
@@ -149,5 +155,50 @@ public class MainActivity extends AppCompatActivity{
             winsO.setText("" + countO);
             countO++;
         }
+    }
+
+    public void reiniciarJuego(){
+        for (int i = 0; i <= 8; i++){
+            juego[i] = '-';
+        }
+        b1.setText("-");
+        b2.setText("-");
+        b3.setText("-");
+        b4.setText("-");
+        b5.setText("-");
+        b6.setText("-");
+        b7.setText("-");
+        b8.setText("-");
+        b9.setText("-");
+        turno = 'X';
+    }
+
+    public void mostrarDialogo() {
+        String ganador = "";
+        if(countX > countO)
+            ganador = "X";
+        else if (countO > countX)
+            ganador = "O";
+        else if (countO == countX)
+            ganador = "Nadie";
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Tenemos un ganador!");
+        builder.setMessage("El ganador es: " + ganador);
+
+        builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                countX = 1;
+                countO = 1;
+                winsO.setText("0");
+                winsX.setText("0");
+                reiniciarJuego();
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }
