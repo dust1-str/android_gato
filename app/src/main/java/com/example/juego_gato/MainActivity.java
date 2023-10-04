@@ -171,6 +171,7 @@ public class MainActivity extends AppCompatActivity{
         b8.setText("-");
         b9.setText("-");
         turno = 'X';
+        winner.setText("");
     }
 
     public void mostrarDialogo() {
