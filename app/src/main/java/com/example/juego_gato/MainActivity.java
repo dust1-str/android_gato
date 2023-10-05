@@ -4,6 +4,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
@@ -15,7 +16,7 @@ public class MainActivity extends AppCompatActivity{
     Button b1, b2, b3, b4, b5, b6, b7, b8, b9, reset, end;
     TextView winner, winsX, winsO;
     char turno = 'X';
-    int i = 0, countX = 1, countO = 1;
+    int i = 0, countX = 0, countO = 0;
     char[] juego = {'-','-','-','-','-','-','-','-','-',};
 
     @Override
@@ -149,11 +150,11 @@ public class MainActivity extends AppCompatActivity{
 
     public void asignarPunto(){
         if (turno == 'X'){
-            winsX.setText("" + countX);
             countX++;
+            winsX.setText("" + countX);
         } else {
-            winsO.setText("" + countO);
             countO++;
+            winsO.setText("" + countO);
         }
     }
 
@@ -181,25 +182,15 @@ public class MainActivity extends AppCompatActivity{
         else if (countO > countX)
             ganador = "O";
         else if (countO == countX)
-            ganador = "Nadie";
+            ganador = "Empate";
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Tenemos un ganador!");
-        builder.setMessage("El ganador es: " + ganador);
+        Bundle bundle = new Bundle();
+        bundle.putString("winner", ganador);
+        bundle.putString("ganadasX", String.valueOf(countX));
+        bundle.putString("ganadosO", String.valueOf(countO));
 
-        builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-                countX = 1;
-                countO = 1;
-                winsO.setText("0");
-                winsX.setText("0");
-                reiniciarJuego();
-            }
-        });
-
-        AlertDialog dialog = builder.create();
-        dialog.show();
+        Intent intent = new Intent(this, ResultadosActivity.class);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 }
