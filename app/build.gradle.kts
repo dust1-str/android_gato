@@ -4,7 +4,7 @@ plugins {
 
 android {
     namespace = "com.example.juego_gato"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.example.juego_gato"
@@ -29,7 +29,7 @@ android {
 }
 
 dependencies {
-
+    implementation ("com.airbnb.android:lottie:6.1.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.9.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
