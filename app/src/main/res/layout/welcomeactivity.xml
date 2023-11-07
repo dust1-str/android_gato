@@ -10,6 +10,7 @@
         android:layout_height="wrap_content"
         android:text="Bienvenido al juego del gato!"
         android:textSize="28sp"
+        android:fontFamily="@font/fuente"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.698"
